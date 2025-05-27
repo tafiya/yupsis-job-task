@@ -10,5 +10,5 @@ while(mutkis>=3)
 }
 return eatenMojo;
 }
-const result= totalMojoConsumed(11);
+const result= totalMojoConsumed(10);
 console.log(`Total Consumed Mojo = ${result}`);

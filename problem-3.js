@@ -10,9 +10,9 @@ function generateRandomTransaction() {
     id,
     amount,
     timestamp: new Date().toISOString(),
-    status: 'pending',       // 'pending', 'rejected', 'success'
-    attemptCount: 0,         // retry count
-    nextAttemptAt: new Date() // ready to process immediately
+    status: 'pending',     
+    attemptCount: 0,         
+    nextAttemptAt: new Date() 
   };
 }
 
@@ -20,12 +20,12 @@ function generateRandomTransaction() {
 setInterval(() => {
   const trx = generateRandomTransaction();
   payments.push(trx);
-  console.log("🆕 New transaction added:", trx);
+  console.log("New transaction added:", trx);
 }, 1000);
 
 // Simulate post-success action
 function netfeeCustomerRecharge(message) {
-  console.log("💸 Recharge processed for trxId:", message.id);
+  console.log("Recharge processed for trxId:", message.id);
 }
 
 // Message processor
@@ -43,15 +43,14 @@ function processMessages() {
   }
 
   const randomNum = Math.floor(Math.random() * 1000);
-  console.log(`🔍 Validating trxId: ${nextMessage.id} against random: ${randomNum}`);
+  console.log(`Validating trxId: ${nextMessage.id} against random: ${randomNum}`);
 
   if (nextMessage.id === randomNum) {
-    // ✅ Success
     nextMessage.status = 'success';
-    console.log("✅ Transaction successful:", nextMessage);
+    console.log("Transaction successful:", nextMessage);
     netfeeCustomerRecharge(nextMessage);
   } else {
-    // ❌ Failure - schedule retry
+    //  Failure - schedule retry
     nextMessage.status = 'rejected';
     nextMessage.attemptCount += 1;
 
@@ -59,7 +58,7 @@ function processMessages() {
     const retryTime = new Date(Date.now() + delayMinutes * 60 * 1000);
     nextMessage.nextAttemptAt = retryTime;
 
-    console.log(`❌ Validation failed. Retry #${nextMessage.attemptCount} in ${delayMinutes} minutes.`, nextMessage);
+    console.log(`Validation failed. Retry #${nextMessage.attemptCount} in ${delayMinutes} minutes.`, nextMessage);
   }
 }
 
